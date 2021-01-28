@@ -117,6 +117,14 @@
   :env/dev
   {:extra-paths ["dev"]}
 
+  ;; REPL-related tools:
+  ;; - start Figwheel or REBL or Reveal or Rebel Readline, with a socket REPL:
+  ;;   - clj -M:rebl:dev/repl OR clj -M:reveal:dev/repl OR clojure -M:rebel:dev/repl
+  ;;   - clojure -M:fig:build:dev/repl
+  ;; - recently renamed from :dev to be less likely to clash with project-specific
+  ;;   aliases (some projects already have a :dev alias):
+  :dev/repl {:main-opts ["-e" "(load-file,(str,(System/getProperty,\"user.home\"),\"/.clojure/dev.clj\"))"]}
+
   ;; End of REPL experience
   ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -466,7 +474,7 @@
   {:extra-deps {vlaaad/reveal {:mvn/version "1.1.171"}}
    :ns-default vlaaad.reveal
    :exec-fn    repl
-   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,32}"]
+   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,14}"]
    :main-opts  ["-m" "vlaaad.reveal" "repl"]}
 
 
@@ -483,7 +491,7 @@
   {:extra-deps
    {vlaaad/reveal              {:mvn/version "1.1.171"}
     com.bhauman/rebel-readline {:mvn/version "0.1.4"}}
-   :jvm-opts  ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,32}"]
+   :jvm-opts  ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,14}"]
    :main-opts ["-e" "(require,'rebel-readline.core),(require,'rebel-readline.clojure.line-reader),(require,'rebel-readline.clojure.service.local),(require,'rebel-readline.clojure.main),(require,'vlaaad.reveal)(rebel-readline.core/with-line-reader,(rebel-readline.clojure.line-reader/create,(rebel-readline.clojure.service.local/create)),(vlaaad.reveal/repl,:prompt,(fn,[]),:read,(rebel-readline.clojure.main/create-repl-read)))"]}
 
   ;; Not sending all evaluations to Reveal
@@ -516,7 +524,7 @@
   :inspect/reveal-light-nrepl
   {:extra-deps {vlaaad/reveal {:mvn/version "1.1.171"}
                 nrepl/nrepl   {:mvn/version "0.8.3"}}
-   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,32}"]
+   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,14}"]
    :main-opts  ["-m" "nrepl.cmdline"
                 "--middleware" "[vlaaad.reveal.nrepl/middleware]"]}
 
@@ -537,7 +545,7 @@
                 nrepl/nrepl                   {:mvn/version "0.8.3"}
                 cider/cider-nrepl             {:mvn/version "0.25.5"}
                 refactor-nrepl/refactor-nrepl {:mvn/version "2.5.0"}}
-   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,32}"]
+   :jvm-opts   ["-Dvlaaad.reveal.prefs={:theme,:light,:font-family,\"https://ff.static.1001fonts.net/u/b/ubuntu.mono.ttf\",:font-size,14}"]
    :main-opts  ["-m" "nrepl.cmdline"
                 "--middleware" "[vlaaad.reveal.nrepl/middleware,refactor-nrepl.middleware/wrap-refactor,cider.nrepl/cider-middleware]"]}
 
@@ -966,7 +974,7 @@
   :alpha/hot-load
   {:extra-deps {org.clojure/tools.deps.alpha
                 {:git/url "https://github.com/clojure/tools.deps.alpha"
-                 :sha     "ada6944e1bf949f9e2ed5291a6fd45e5c4628392"}}
+                 :sha     "d77476f3d5f624249462e275ae62d26da89f320b"}}
    ;; DynamicClassLoader required for add-lib to work
    ;; if starting other processes via aliases such as a socket REPL or Cognitect's REBL
    :main-opts  ["-e" "(->>(Thread/currentThread)(.getContextClassLoader)(clojure.lang.DynamicClassLoader.)(.setContextClassLoader,(Thread/currentThread)))"]}
